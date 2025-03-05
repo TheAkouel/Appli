@@ -1,0 +1,410 @@
+body{
+    margin: 0;
+    background: #4e4ebf;
+    color: #9f9fd3;
+    height: 100vh;
+}
+
+.sidebar {
+    --color-primary: #4651ca;
+    position: fixed;
+    overflow: hidden;
+    top: 24px;
+    left: 24px;
+    bottom: 28px;
+    width: 80px;
+    transition: width 0.4s;
+    border-radius: 18px;
+}
+
+.sidebar button{
+    border: 0;
+    background: #31315a;
+    font-size: 20px;
+    color: inherit;
+    border-radius: 8px;
+    font-family: inherit;
+    cursor: pointer;
+}
+
+.left, .right{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    transition: 0.4s;
+    border-radius: inherit;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.left{
+    z-index: 1;
+    left: 0;
+    width: 80px;
+    background: #1d1d2b;
+}
+
+.right{
+    left: 80px;
+    width: 220px;
+    background: rgb(29 29 43 / 82%);
+    translate: -100% 0;
+}
+
+.left img{
+    width: 40px;
+    margin: 34px 0 40px;
+}
+
+.left button{
+    width: 40px;
+    height: 40px;
+    margin-bottom: 18px;
+    display: grid;
+    place-items: center;
+}
+
+.left button:last-of-type {
+    margin-top: auto;
+    margin-bottom: 20px;
+}
+
+.right h1{
+    color: #f9f9f9;
+    letter-spacing: 2px;
+    font-size: 18px;
+    font-weight: 500;
+    width: 100%;
+    margin: 42px 10px 24px 58px;
+    cursor: default;
+}
+
+.right h2{
+    color: #a6a6d8;
+    font-size: 14px;
+    font-weight: 500;
+    width: 100%;
+    margin: 28px 0 18px 58px;
+    cursor: default;
+}
+
+.right .buttons{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    padding: 16px;
+    gap: 16px;
+}
+
+.right button{
+    padding: 8px;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+}
+
+.right button img{
+    background: #31315a;
+    width: 50px;
+    height: 50px;
+    border-radius: 8px;
+    font-size: 22px;
+    display: grid;
+    place-items: center;
+}
+
+.right button:hover img{
+    color: #f9f9f9;
+    background: var(--color-primary);
+}
+
+.right button span{
+    font-size: 12px;
+}
+
+.sidebar:hover{
+    width: 300px;
+}
+
+.sidebar:hover .left{
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.sidebar:hover .right{
+    translate:0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.body_weather {
+    font-family: Poppins;
+    background: rgb(231,222,200);
+    background: radial-gradient(circle, rgba(231,222,200,1) 20%, rgba(99,213,231,1) 50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin: 0;
+}
+
+.container_weather {
+    background-color: white;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    max-width: 600px;
+}
+
+input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    margin-right: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.button_weather {
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.button_weather:hover {
+    background-color: #0056b3;
+}
+
+h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 5px;
+}
+
+#currentWeatherData, .forecast-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    border: 1px solid #f0f0f0;
+    padding:10px;
+    border-radius: 4px;
+}
+
+#currentWeatherData img, .forecast-item img{
+  margin-right: 25px;
+}
+
+.forecast-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; 
+}
+
+.forecast-item {
+
+    gap: 10px;
+    box-sizing: border-box;
+    text-align: center;
+    background-color: #f9f9f9;
+
+}
+
+.error {
+    color: red;
+    margin-top: 10px;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container{
+    margin: 0 auto;
+    width: 1200px;
+}
+
+html, body {
+    padding: 0;
+    margin: 0;
+    scroll-behavior: smooth;
+    position: relative;
+}
+
+.todo{
+    display: flex;
+    justify-content: center;
+    margin: 100px;
+}
+
+.list{
+    position: relative;
+    padding: 5px;
+    border: solid;
+    background-color: #FFC0CB;
+    border-radius: 10px;
+    width: 500px;
+    display: flex;
+    justify-content: center;
+}
+
+.poppins-regular {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+  
+  .poppins-bold {
+    font-family: "Poppins", serif;
+    font-weight: 700;
+    font-style: normal;
+  }
+  
+  .poppins-regular-italic {
+    font-family: "Poppins", serif;
+    font-weight: 400;
+    font-style: italic;
+  }
+
+  .ajout{
+    border-radius: 5px;
+    background-color: #E6A8D7;
+  }
+  
+  .task-item {
+    background-color: #ffe0f0; 
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+    .task-item::before {
+        content: "- ";
+        font-weight: bold;
+    }
+
+  .chat{
+    position: absolute;
+    top: 0px;
+    right: 25px;
+    width: 100px;
+    height: 100px;
+  }
+
+  input{
+    border: 2px solid black;
+    border-radius: 5px;
+  }
+
+  .scene {
+    width: 200px;
+    height: 200px;
+    position: relative;
+}
+
+.cube {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    transform-style: preserve-3d;
+    animation: rotateCube 12s infinite linear;
+}
+
+.face {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    background-size: cover;
+    background-position: center;
+    border: 2px solid black;
+}
+
+/* .front  { transform: translateZ(100px); background-image: url('../imgs/img1.jpg'); }
+.back   { transform: rotateY(180deg) translateZ(100px); background-image: url('../imgs/img2.jpg'); }
+.left   { transform: rotateY(-90deg) translateZ(100px); background-image: url('../imgs/img3.jpg'); }
+.right  { transform: rotateY(90deg) translateZ(100px); background-image: url('../imgs/img4.jpg'); }
+.top    { transform: rotateX(90deg) translateZ(100px); background-image: url('../mgs/img5.jpg'); }
+.bottom { transform: rotateX(-90deg) translateZ(100px); background-image: url('../imgs/img6.jpg'); }
+
+@keyframes rotateCube {
+    from { transform: rotateX(0) rotateY(0); }
+    to   { transform: rotateX(360deg) rotateY(360deg); }
+} */
+
+.task {
+  display: block; /* Permet au span de prendre toute la largeur disponible */
+  max-width: 200px; /* Largeur maximale */
+  word-wrap: break-word; /* Coupe les mots trop longs */
+  overflow-wrap: break-word; /* S'assure que les longs mots passent à la ligne */
+  white-space: normal; /* Permet au texte de passer à la ligne */
+}
+
+/* ... (votre CSS existant) ... */
+
+#page-container {
+    position: relative; /* Important pour le positionnement absolu des pages */
+    width: calc(100vw - 250px); /* Ajustez 250px si votre sidebar a une largeur différente */
+    height: 100vh;
+    margin-left: 250px;  /*  Important: Décale le contenu pour laisser la place à la sidebar */
+    overflow: hidden; /* Empêche les barres de défilement pendant les transitions */
+}
+
+.page {
+    position: absolute; /* Permet de superposer les pages */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* display: none;  Plus besoin, géré par le JS */
+    /* Ajoutez d'autres styles pour vos pages ici, si nécessaire */
+}
+/* Style pour l'indicateur de chargement (ajustez selon vos préférences) */
+#loading-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+    display: none; /* Caché par défaut */
+    justify-content: center;
+    align-items: center;
+    z-index: 1000; /* Assurez-vous qu'il est au-dessus de tout */
+}
+
+#loading-overlay img {
+    width: 50px; /* Ajustez la taille de votre GIF */
+    height: 50px;
+}
+
+
+@media (max-width: 768px) {
+    .container {
+        width: 95%;
+    }
+
+    input[type="text"] {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    .forecast-item{
+      flex: 0 0 calc(50% - 10px);
+    }
+}
+
+@media (max-width: 480px) {
+    .forecast-item {
+        flex: 0 0 100%;
+    }
+}

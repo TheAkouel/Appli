@@ -1,0 +1,23 @@
+<div class="container_weather">
+    <h1>Météo</h1>
+    <input type="text" id="cityInput" placeholder="Entrez une ville">
+    <button class="button_weather" id="searchButton">Rechercher</button>
+
+    <div id="currentWeather">
+        <h2>Météo Actuelle</h2>
+        <div id="currentWeatherData"></div>
+    </div>
+
+    <div id="hourlyForecast">
+        <h2>Prévisions</h2>
+        <div id="hourlyForecastData" class="forecast-container"></div>
+    </div>
+
+    <div id="dailyForecast">
+        <h2>Prévisions (3 prochains jours)</h2>
+        <div id="dailyForecastData" class="forecast-container"></div>
+    </div>
+
+    <div id="error" class="error"></div>
+</div>
+<script src="scripts/weather.js"></script>
