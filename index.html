@@ -7,46 +7,29 @@
     <link rel="stylesheet" href="styles/style.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="icon" href="imgs/chat-mignon-isole-illustration-vectorielle-fond-transparent_915071-19589-removebg-preview.png" />
 </head>
 <body class="body_weather">
     <aside class="sidebar">
         <div class="left">
             <a href="index.html" class="nav-link" data-target="index.html">
-                <img src="imgs/logo.jpg">
+                <img src="imgs/logo.jpg" alt="Logo">
             </a>
         </div>
         <div class="right">
             <h1>Liste d'applications</h1>
             <nav class="buttons">
-                <a href="todo.html" class="nav-link" data-target="todo.html" style="color: white;">
+                <a href="todo.html" class="nav-link" data-target="todo.html">
                     <button>
-                        <img src="imgs/to-do-svgrepo-com.svg" alt="" style="width: 100%;">
+                        <img src="imgs/to-do-svgrepo-com.svg" alt="To Do List">
                         <span>To Do List</span>
                     </button>
                 </a>
 
-                <a href="weather.html" class="nav-link" data-target="weather.html" style="color: white;">
+                <a href="weather.html" class="nav-link" data-target="weather.html">
                     <button>
-                        <img src="imgs/weather-svgrepo-com.svg" alt="" style="width: 100%;">
+                        <img src="imgs/weather-svgrepo-com.svg" alt="Météo">
                         <span>Météo</span>
-                    </button>
-                </a>
-
-                <a href="weather.html" class="nav-link" data-target="weather.html" style="color: white;"><button>
-                        <img src="imgs/weather-svgrepo-com.svg" alt="" style="width: 100%;">
-                        <span>To Do List</span>
-                    </button>
-                </a>
-
-                 <a href="weather.html" class="nav-link" data-target="weather.html" style="color: white;"><button>
-                        <img src="imgs/weather-svgrepo-com.svg" alt="" style="width: 100%;">
-                        <span>To Do List</span>
-                    </button>
-                </a>
-
-                 <a href="weather.html" class="nav-link" data-target="weather.html" style="color: white;"><button>
-                        <img src="imgs/weather-svgrepo-com.svg" alt="" style="width: 100%;">
-                        <span>To Do List</span>
                     </button>
                 </a>
             </nav>
@@ -62,18 +45,16 @@
 
     <div id="page-container">
         <div class="page" id="content-index">
-            <h1>Bienvenue!</h1>
-             <p>Cliquez sur un lien dans la barre latérale.</p>
+           <h1>Bienvenue !</h1>
+           <p>Sélectionnez une application dans la barre latérale.</p>
         </div>
-         <div class="page" id="content-todo" style="display: none;"></div>
-         <div class="page" id="content-weather" style="display: none;"></div>
-
+        <div class="page" id="content-todo"></div>
+        <div class="page" id="content-weather"></div>
     </div>
 
-     <div id="loading-overlay">
+    <div id="loading-overlay">
         <img src="imgs/loading.gif" alt="Loading...">
     </div>
-
 
     <script src="scripts/script.js"></script>
 </body>

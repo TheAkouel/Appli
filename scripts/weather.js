@@ -1,135 +1,141 @@
-const apiKey = '7f9f2a18dc4a91e51d24d41db645cfe0';
-const cityInput = document.getElementById('cityInput');
-const searchButton = document.getElementById('searchButton');
-const currentWeatherDiv = document.getElementById('currentWeatherData');
-const hourlyForecastDiv = document.getElementById('hourlyForecastData');
-const dailyForecastDiv = document.getElementById('dailyForecastData');
-const errorDiv = document.getElementById('error');
+// scripts/weather.js
 
+function initWeather() {
+    const cityInput = document.getElementById('cityInput');
+    const searchButton = document.getElementById('searchButton');
+    const currentWeatherData = document.getElementById('currentWeatherData');
+    const hourlyForecastData = document.getElementById('hourlyForecastData');
+    const dailyForecastData = document.getElementById('dailyForecastData');
+    const errorDiv = document.getElementById('error');
 
-searchButton.addEventListener('click', () => {
-    const city = cityInput.value;
-    if (city) {
-        getWeatherData(city);
-    } else {
-        showError('Veuillez entrer le nom d\'une ville.');
-    }
-});
+    const apiKey = 'd9e3b4506555b4559c9055895957cb58'; // Remplacez par votre clé API
 
-async function getWeatherData(city) {
-    try {
-
-        currentWeatherDiv.innerHTML = '';
-        hourlyForecastDiv.innerHTML = '';
-        dailyForecastDiv.innerHTML = '';
-        errorDiv.textContent = '';
-
-
-
-        const currentWeatherResponse = await fetch(`https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`);
-        const currentWeatherData = await currentWeatherResponse.json();
-        if (currentWeatherData.cod !== 200) {
-          throw new Error(currentWeatherData.message);
+    function displayCurrentWeather(data) {
+        if (!data || data.cod !== 200) {
+            throw new Error("Données météo non valides ou ville non trouvée.");
         }
-
-        displayCurrentWeather(currentWeatherData);
-
-
-
-        const forecastResponse = await fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=fr`);
-        const forecastData = await forecastResponse.json();
-
-        if (forecastData.cod !== "200") {
-          throw new Error(forecastData.message);
-        }
-        displayHourlyForecast(forecastData);
-        displayDailyForecast(forecastData);
-
-
-    } catch (error) {
-        showError(error.message);
-        console.error("Erreur lors de la récupération des données:", error);
-
-    }
-}
-
-function displayCurrentWeather(data) {
-    const weather = data.weather[0];
-    currentWeatherDiv.innerHTML = `
-        <img src="https://openweathermap.org/img/wn/${weather.icon}@2x.png" alt="${weather.description}">
-        <div>
+        currentWeatherData.innerHTML = `
             <p>Température: ${data.main.temp}°C</p>
             <p>Ressenti: ${data.main.feels_like}°C</p>
-            <p>Conditions: ${weather.description}</p>
             <p>Humidité: ${data.main.humidity}%</p>
-            <p>Vent: ${data.wind.speed} m/s</p>
-        </div>
-    `;
-}
-
+            <p>Vent: <span class="math-inline">\{data\.wind\.speed\} m/s</p\>
+<img src\="https\://openweathermap\.org/img/wn/</span>{data.weather[0].icon}@2x.png" alt="${data.weather[0].description}">
+            <p>Conditions: ${data.weather[0].description}</p>
+        `;
+    }
+    
 function displayHourlyForecast(data) {
+    if (!data || !data.list || data.list.length === 0) {
+         hourlyForecastData.innerHTML = '<p>Aucune prévision horaire disponible.</p>';
+         return;
+     }
 
-  const hourlyData = data.list.filter((item, index) => index % 2 === 0 && index < 8 );
+     hourlyForecastData.innerHTML = ''; // Efface le contenu précédent
 
-    hourlyData.forEach(item => {
-        const dateTime = new Date(item.dt * 1000);
-        const hour = dateTime.getHours();
-        const weather = item.weather[0];
-        const temps = Math.round(item.main.temp);
+     // Affiche les prévisions pour les prochaines 24 heures (8 intervalles de 3 heures)
+     for (let i = 0; i < 8; i++) {
+         const forecast = data.list[i];
+         if (!forecast) break; // Gère le cas où il y a moins de 8 prévisions
 
-        const forecastItem = document.createElement('div');
-        forecastItem.classList.add('forecast-item');
-        forecastItem.innerHTML = `
-            <p>${hour}:00</p>
-            <img src="https://openweathermap.org/img/wn/${weather.icon}.png" alt="${weather.description}">
-            <p>${temps}°C</p>
-            <p>${weather.description}</p>
-        `;
-        hourlyForecastDiv.appendChild(forecastItem);
-    });
+         const dateTime = new Date(forecast.dt * 1000); // Convertit le timestamp en date
+         const hour = dateTime.getHours();
+
+         const forecastDiv = document.createElement('div');
+         forecastDiv.classList.add('forecast-item');
+         forecastDiv.innerHTML = `
+             <p>${hour}:00</p>
+             <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}">
+             <p>${forecast.main.temp}°C</p>
+         `;
+         hourlyForecastData.appendChild(forecastDiv);
+     }
+ }
+
+ function displayDailyForecast(data) {
+     if (!data || !data.list || data.list.length === 0) {
+         dailyForecastData.innerHTML = '<p>Aucune prévision quotidienne disponible.</p>';
+         return;
+     }
+
+     dailyForecastData.innerHTML = ''; // Efface le contenu précédent
+
+     // Affiche les prévisions pour les 3 prochains jours
+     for (let i = 0; i < 3; i++) {
+          const forecast = data.list[i*8]; // Prend une prévision sur 8 (toutes les 24h)
+         if (!forecast) break;
+
+         const date = new Date(forecast.dt * 1000);
+         const dayName = date.toLocaleDateString('fr-FR', { weekday: 'long' }); // Jour de la semaine en français
+
+         const forecastDiv = document.createElement('div');
+         forecastDiv.classList.add('forecast-item');
+         forecastDiv.innerHTML = `
+             <p>${dayName}</p>
+             <img src="https://openweathermap.org/img/wn/${forecast.weather[0].icon}.png" alt="${forecast.weather[0].description}">
+             <p>Min: ${forecast.main.temp_min}°C</p>
+             <p>Max: ${forecast.main.temp_max}°C</p>
+         `;
+         dailyForecastData.appendChild(forecastDiv);
+     }
+ }
+
+
+  function showError(message) {
+     errorDiv.textContent = message;
+     errorDiv.style.display = 'block'; // Affiche le message d'erreur
+ }
+
+ function hideError() {
+     errorDiv.style.display = 'none'; // Cache le message d'erreur
+ }
+
+
+ function getWeather(city) {
+     hideError(); // Cache les erreurs précédentes
+
+     const currentWeatherUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric&lang=fr`;
+     const forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric&lang=fr`;
+
+     // Fetch pour la météo actuelle
+     fetch(currentWeatherUrl)
+         .then(response => response.json())
+         .then(data => {
+            displayCurrentWeather(data);
+
+            // Fetch pour les prévisions (seulement si la météo actuelle a réussi)
+             return fetch(forecastUrl);
+         })
+         .then(response => response.json())
+         .then(data => {
+           displayHourlyForecast(data);
+           displayDailyForecast(data);
+         })
+
+         .catch(error => {
+             console.error("Erreur lors de la récupération des données météo:", error);
+             showError("Impossible de récupérer les données météo. Veuillez vérifier le nom de la ville et votre connexion internet.");
+         });
+ }
+
+ searchButton.addEventListener('click', () => {
+     const city = cityInput.value.trim();
+     if (city) {
+         getWeather(city);
+     } else {
+        showError("Veuillez entrer le nom d'une ville.");
+     }
+ });
+
+  //Pour permettre la recherche avec la touche "Entrée"
+  cityInput.addEventListener('keypress', (event) =>{
+     if(event.key === "Enter"){
+         const city = cityInput.value.trim();
+         if (city) {
+             getWeather(city);
+         } else {
+            showError("Veuillez entrer le nom d'une ville.");
+         }
+     }
+  })
 }
-
-function displayDailyForecast(data) {
-
-    const dailyData = {};
-    data.list.forEach(item => {
-        const date = new Date(item.dt * 1000).toLocaleDateString();
-        if (!dailyData[date]) {
-            dailyData[date] = [];
-        }
-        dailyData[date].push(item);
-    });
-
-
-    const next3Days = Object.keys(dailyData).slice(1, 4); // Ignorer le jour actuel
-
-    next3Days.forEach(date => {
-      const dayData = dailyData[date];
-
-
-      const temps = dayData.map(item => item.main.temp);
-      const minTemp = Math.min(...temps);
-      const maxTemp = Math.max(...temps);
-      const roundMinTemp = Math.round(minTemp);
-      const roundMaxTemp = Math.round(maxTemp);
-
-      const weather = dayData[0].weather[0];
-
-        const forecastItem = document.createElement('div');
-        forecastItem.classList.add('forecast-item');
-        forecastItem.innerHTML = `
-            <p>${date}</p>
-            <img src="https://openweathermap.org/img/wn/${weather.icon}.png" alt="${weather.description}">
-            <p>Min: ${roundMinTemp}°C</p>
-            <p>Max: ${roundMaxTemp}°C</p>
-            <p>${weather.description}</p>
-
-        `;
-        dailyForecastDiv.appendChild(forecastItem);
-    });
-}
-
-function showError(message) {
-    errorDiv.textContent = message;
-}
-
+// Pas de DOMContentLoaded ici
