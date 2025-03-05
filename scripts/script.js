@@ -13,7 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
         loadingOverlay.style.display = 'none';
     }
 
-    function loadPage(targetPageId) {
+    function loadPage(targetPageId, updateHistory = true) {
         showLoading();
         const currentPage = document.getElementById(currentPageId);
         const targetPage = document.getElementById('content-' + targetPageId.replace('.html', ''));
@@ -24,8 +24,10 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // Mettre à jour l'URL avant la transition
-        history.pushState({ page: targetPageId }, '', targetPageId);
+        // Mettre à jour l'URL avant la transition, mais seulement si updateHistory est true
+        if (updateHistory) {
+            history.pushState({ page: targetPageId }, '', targetPageId);
+        }
 
 
         // Si la page est déjà chargée, on fait juste la transition
@@ -116,17 +118,17 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         } else {
 
-            loadPage('index.html');
+            loadPage('index.html', false);  // Ne pas mettre à jour l'historique
         }
     });
 
 
-     // Charger la page initiale en fonction de l'URL
+     // Charger la page initiale en fonction de l'URL, SANS mettre à jour l'historique
      const initialPage = window.location.pathname.split('/').pop();
      if (initialPage && initialPage !== 'index.html' && initialPage !== '') {
-        loadPage(initialPage);
+        loadPage(initialPage, false); //  <--  IMPORTANT:  false ici !
      } else {
-        loadPage('index.html'); // Charge la page d'accueil par défaut
+        loadPage('index.html', false); // Charge la page d'accueil par défaut, sans mettre à jour l'historique
      }
 
 });
