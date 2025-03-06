@@ -363,7 +363,7 @@ html, body {
 .page {
     position: absolute; /* Permet de superposer les pages */
     top: 0;
-    left: 0;
+    left: 25%;
     width: 100%;
     height: 100%;
     /* display: none;  Plus besoin, géré par le JS */

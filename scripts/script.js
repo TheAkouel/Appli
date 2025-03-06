@@ -10,33 +10,43 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function hideLoading() {
+        console.log("Page chargée, masquage du loader");
         loadingOverlay.style.display = 'none';
     }
+    
 
     function loadPage(targetPageId, updateHistory = true) {
+        console.log("Chargement de la page:", targetPageId); // Test d'appel de la fonction
+    
+        // Si la page est 'index.html', on n'appelle pas fetch et on cache directement le loader
+        if (targetPageId === 'index.html') {
+            console.log("Chargement de la page d'accueil, masquage du loader");
+            hideLoading();
+            return;
+        }
+    
         showLoading();
         const currentPage = document.getElementById(currentPageId);
         const targetPage = document.getElementById('content-' + targetPageId.replace('.html', ''));
-
+    
         if (!targetPage) {
             console.error("Page cible non trouvée:", 'content-' + targetPageId.replace('.html', ''));
             hideLoading();
             return;
         }
-
+    
         // Mettre à jour l'URL avant la transition, mais seulement si updateHistory est true
         if (updateHistory) {
             history.pushState({ page: targetPageId }, '', targetPageId);
         }
-
-
+    
         // Si la page est déjà chargée, on fait juste la transition
         if (targetPage.innerHTML.trim().length > 0) {
             transitionPages(currentPage, targetPage);
             return;
         }
-
-
+    
+        // Autres pages (todo.html, weather.html, etc.) chargées via fetch
         fetch(targetPageId)
             .then(response => {
                 if (!response.ok) {
@@ -46,7 +56,7 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then(html => {
                 targetPage.innerHTML = html;
-
+    
                 // Exécuter le script de la page chargée, si elle en a un
                 if (targetPageId === 'todo.html') {
                     initTodo(); // Initialise la ToDo List
@@ -63,6 +73,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 hideLoading();
             });
     }
+    
 
 
     function transitionPages(currentPage, targetPage) {

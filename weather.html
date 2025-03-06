@@ -1,22 +1,70 @@
-<div class="container_weather">
-    <h1>Météo</h1>
-    <input type="text" id="cityInput" placeholder="Entrez une ville">
-    <button class="button_weather" id="searchButton">Rechercher</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sidebar</title>
+    <link rel="stylesheet" href="styles/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js"></script>
+    <link rel="icon" href="imgs/chat-mignon-isole-illustration-vectorielle-fond-transparent_915071-19589-removebg-preview.png" />
+</head>
+<body class="body_weather">
+    <aside class="sidebar">
+        <div class="left">
+            <a href="index.html" class="nav-link" data-target="index.html">
+                <img src="imgs/logo.jpg" alt="Logo">
+            </a>
+        </div>
+        <div class="right">
+            <h1>Liste d'applications</h1>
+            <nav class="buttons">
+                <a href="todo.html" class="nav-link" data-target="todo.html">
+                    <button>
+                        <img src="imgs/to-do-svgrepo-com.svg" alt="To Do List">
+                        <span>To Do List</span>
+                    </button>
+                </a>
 
-    <div id="currentWeather">
-        <h2>Météo Actuelle</h2>
-        <div id="currentWeatherData"></div>
+                <a href="weather.html" class="nav-link" data-target="weather.html">
+                    <button>
+                        <img src="imgs/weather-svgrepo-com.svg" alt="Météo">
+                        <span>Météo</span>
+                    </button>
+                </a>
+            </nav>
+            <h2>Statistics</h2>
+            <nav class="buttons">
+                <button>
+                    <i class="ai-triangle-alert"></i>
+                    <span>Alerts</span>
+                </button>
+            </nav>
+        </div>
+    </aside>
+
+    <div class="container_weather">
+        <h1>Météo</h1>
+        <input type="text" id="cityInput" placeholder="Entrez une ville">
+        <button class="button_weather" id="searchButton">Rechercher</button>
+
+        <div id="currentWeather">
+            <h2>Météo Actuelle</h2>
+            <div id="currentWeatherData"></div>
+        </div>
+
+        <div id="hourlyForecast">
+            <h2>Prévisions (Heure par Heure)</h2>
+            <div id="hourlyForecastData" class="forecast-container"></div>
+        </div>
+
+        <div id="dailyForecast">
+            <h2>Prévisions (3 prochains jours)</h2>
+            <div id="dailyForecastData" class="forecast-container"></div>
+        </div>
+
+        <div id="error" class="error"></div>
     </div>
-
-    <div id="hourlyForecast">
-        <h2>Prévisions (Heure par Heure)</h2>
-        <div id="hourlyForecastData" class="forecast-container"></div>
-    </div>
-
-    <div id="dailyForecast">
-        <h2>Prévisions (3 prochains jours)</h2>
-        <div id="dailyForecastData" class="forecast-container"></div>
-    </div>
-
-    <div id="error" class="error"></div>
-</div>
+    <script src="scripts/weather.js"></script>
+</body>
+</html>
